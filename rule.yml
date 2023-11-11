@@ -1,0 +1,79 @@
+
+providers:
+  taobao.com:
+    urlPattern: '^https?:\/\/(?:[a-z0-9-]+\.)*?taobao\.com'
+    rules:
+      - price
+      - sourceType
+      - suid
+      - ut_sk
+      - un
+      - share_crt_v
+      - sp_tk
+      - cpp
+      - shareurl
+      - short_name
+      - app
+      - 'scm[_a-z-]*'
+      - pvid
+      - algo_expid
+      - algo_pvid
+      - ns
+      - abbucket
+      - ali_refid
+      - ali_trackid
+      - acm
+      - utparam
+      - pos
+      - abtest
+      - trackInfo
+      - utkn
+      - scene
+      - mytmenu
+      - turing_bucket
+      - lygClk
+      - impid
+      - bftTag
+      - bftRwd
+      - spm
+      - _u
+      
+  tb.cn:
+    urlPattern: '^https?:\/\/(?:[a-z0-9-]+\.)*?tb\.cn'
+    rules:
+      - sm
+
+  bilibili.com:
+    urlPattern: '^https?:\/\/(?:[a-z0-9-]+\.)*?bilibili\.com'
+    rules:
+      - callback
+      - spm_id_from
+      - from_source
+      - from
+      - seid
+      - mid
+      - share_source
+      - msource
+      - refer_from
+      - share_from
+      - share_medium
+      - share_source
+      - share_plat
+      - share_tag
+      - share_session_id
+      - timestamp
+      - unique_k
+      - vd_source
+      - plat_id
+      - buvid
+      - is_story_h5
+      - up_id
+    exceptions:
+      - '^https?:\/\/api\.bilibili\.com'
+      - '^https?:\/\/space\.bilibili\.com'
+      
+  m.bilibili.com:
+    urlPattern: '^https?:\/\/m\.bilibili\.com'
+    rules:
+      - bbid
+      - ts
