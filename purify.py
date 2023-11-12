@@ -2,7 +2,7 @@
 Author: DBin_K DBinKv1@Gmail.com
 Date: 2023-11-12 01:09:06
 LastEditors: DBin_K DBinKv1@Gmail.com
-LastEditTime: 2023-11-12 12:18:20
+LastEditTime: 2023-11-12 14:19:34
 FilePath: \Link-Purify\purify.py
 Description: 
 '''
@@ -17,7 +17,73 @@ config_file = './rule.yml'    # 配置文件地址
 with open(config_file, 'r', encoding='utf-8') as file:
     config = yaml.safe_load(file)
 
-print(config)
+
+def process_url(text):
+    """
+    提取文字中的域名, 如果是短链接则将其扩展
+
+    参数：
+        text, 任意带链接的文字输入
+
+    返回:
+        url, 文字中的链接
+    """
+    url = extract_url(text)
+    domain = extract_domain(url)
+    short_url_domains = ['b23.tv','xhslink.com']
+
+    for short_url_domain in short_url_domains:
+        if short_url_domain == domain:
+            url = expand_short_url(url)
+            return url
+        else:
+            return url
+    
+
+def extract_domain(url):
+    """
+    提取文字中的域名
+
+    参数：
+        url：链接
+
+    返回：
+        域名，或 `None`
+    """
+
+    # 匹配域名的正则表达式
+    regex = r"(https?://)?(www\.)?(\w+(?:\.\w+)+)"
+
+    # 提取域名
+    match = re.match(regex, url)
+    if match:
+        return match.group(3)
+    else:
+        return None
+    
+    
+def extract_url(text):
+    """
+    提取文本中的链接并返回。
+
+    参数：
+    - text：要提取链接的文本
+
+    返回：
+    - url：链接列表
+    """
+    # 定义链接的正则表达式模式
+    pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    
+    # 使用正则表达式模式匹配文本中的链接
+    match = re.search(pattern, text)
+    
+    if match:
+        link = match.group(0)
+        return link
+    else:
+        return "未找到链接"
+
 
 def expand_short_url(short_url):
     """
@@ -37,6 +103,7 @@ def expand_short_url(short_url):
         print("发生错误：", e)
         return None
 
+
 def remove_tracking_params(url):
     """
     根据给定的规则列表，清除URL中的跟踪参数并返回净化后的URL。
@@ -48,10 +115,10 @@ def remove_tracking_params(url):
     - url：清除跟踪参数后的净化URL
     """
     global config
-    print(config)
+    print(f'原始url: {url}')
     # 获取全局配置中的提供者配置信息
     providers = config['providers']
-    print(providers)
+    
     for provider, provider_config in providers.items():
         # 获取当前提供者的URL匹配域名
         pattern = provider_config['urlPattern']
@@ -67,23 +134,8 @@ def remove_tracking_params(url):
                 url = re.sub(pattern, '', url)
             break
     # 返回净化后的URL
+    print(f'净化url: {url}')
     return url
 
-# 示例用法
 
-#url = 'https://www.bilibili.com/video/BV1R7411K7aF?spm_id_from=333.334.b_63686965665f72656f6d6d656e64.1'
 
-# http://xhslink.com/YhhEpw
-
-# 测试代码
-"""short_url = "https://b23.tv/qovBl9q"
-
-expanded_url = expand_short_url(short_url)
-url = expanded_url
-
-if expanded_url:
-    print("展开后的链接：", expanded_url)
-
-clean_url = remove_tracking_params_by_config(url, config)
-
-print("净化后的链接：", clean_url)"""
