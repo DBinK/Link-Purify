@@ -12,6 +12,7 @@ import requests
 
 url = ""                    # 初始化URL
 config_file = './rule.yml'    # 配置文件地址
+# 短链接列表
 
 # 从配置文件中加载规则
 with open(config_file, 'r', encoding='utf-8') as file:
@@ -20,7 +21,7 @@ with open(config_file, 'r', encoding='utf-8') as file:
 
 def process_url(text):
     """
-    提取文字中的域名, 如果是短链接则将其扩展
+    主要功能, 提取文字中的域名, 如果是短链接则将其扩展
 
     参数：
         text, 任意带链接的文字输入
@@ -35,9 +36,10 @@ def process_url(text):
     for short_url_domain in short_url_domains:
         if short_url_domain == domain:
             url = expand_short_url(url)
-            return url
-        else:
-            return url
+    
+    url = remove_tracking_params(url)
+        
+    return url
     
 
 def extract_domain(url):
@@ -115,7 +117,7 @@ def remove_tracking_params(url):
     - url：清除跟踪参数后的净化URL
     """
     global config
-    print(f'原始url: {url}')
+    print(f'原始url: {url}\n')
     # 获取全局配置中的提供者配置信息
     providers = config['providers']
     
@@ -134,7 +136,7 @@ def remove_tracking_params(url):
                 url = re.sub(pattern, '', url)
             break
     # 返回净化后的URL
-    print(f'净化url: {url}')
+    print(f'净化url: {url}\n')
     return url
 
 

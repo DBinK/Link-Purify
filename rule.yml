@@ -1,3 +1,5 @@
+# 参考规则 https://rules2.clearurls.xyz/data.minify.json
+# 
 
 providers:
   taobao.com:
@@ -42,6 +44,7 @@ providers:
     urlPattern: '^https?:\/\/(?:[a-z0-9-]+\.)*?tb\.cn'
     rules:
       - sm
+      - tk
 
   bilibili.com:
     urlPattern: '^https?:\/\/(?:[a-z0-9-]+\.)*?bilibili\.com'

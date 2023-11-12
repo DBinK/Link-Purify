@@ -16,8 +16,8 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda msg: True)
 def reply_purify_link(message):
-    url = message.text
-    clean_url = purify.remove_tracking_params(url)
+    text = message.text
+    clean_url = purify.process_url(text)
     bot.reply_to(message, clean_url)
 
 
