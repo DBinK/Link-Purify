@@ -2,7 +2,7 @@
 Author: DBin_K DBinKv1@Gmail.com
 Date: 2023-11-12 01:09:06
 LastEditors: DBin_K DBinKv1@Gmail.com
-LastEditTime: 2023-11-12 14:58:40
+LastEditTime: 2023-11-13 01:44:12
 FilePath: \Link-Purify\purify.py
 Description: 
 '''
@@ -29,7 +29,12 @@ def process_url(text):
     返回:
         url, 文字中的链接
     """
-    print(f'原始text: {text}\n')
+    global origin_text 
+
+    origin_text = text
+
+    print(f'原始text: {origin_text}\n')
+
     url = extract_url(text)
     domain = extract_domain(url)
     short_url_domains = [
@@ -147,3 +152,18 @@ def remove_tracking_params(url):
     print(f'净化url: {url}\n')
     return url
 
+def replace_url(origin_text, url):
+    """
+    将文本中的链接替换为指定的URL。
+
+    参数:
+    - text: 要处理的文本
+    - url: 替换链接的目标URL
+
+    返回:
+    - replaced_text: 替换后的文本
+    """
+    # 使用正则表达式匹配文本中的链接
+    pattern = r'(https?://\S+)'
+    replaced_text = re.sub(pattern, url, origin_text)
+    return replaced_text

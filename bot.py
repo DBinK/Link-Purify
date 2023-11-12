@@ -26,8 +26,9 @@ def query_text(inline_query):
     text = inline_query.query
     try:
         clean_url = purify.process_url(text)
+        replaced_text = purify.replace_url(text, clean_url)
         r = types.InlineQueryResultArticle('1', '只有净化后的链接', types.InputTextMessageContent(clean_url))
-        r2 = types.InlineQueryResultArticle('2', '原始文字和净化后的链接', types.InputTextMessageContent('hi'))
+        r2 = types.InlineQueryResultArticle('2', '原始文字和净化后的链接', types.InputTextMessageContent(replaced_text))
         bot.answer_inline_query(inline_query.id, [r, r2])
     except Exception as e:
         print(e)
