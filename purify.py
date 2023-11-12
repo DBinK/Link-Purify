@@ -93,7 +93,6 @@ def extract_url(text):
     else:
         return "未找到链接"
 
-
 def expand_short_url(short_url):
     """
     展开短链接并返回完整的URL。
@@ -115,7 +114,6 @@ def expand_short_url(short_url):
     except requests.exceptions.RequestException as e:
         print("发生错误: ", e)
         return None
-
 
 def remove_tracking_params(url):
     """
@@ -164,6 +162,6 @@ def replace_url(origin_text, url):
     - replaced_text: 替换后的文本
     """
     # 使用正则表达式匹配文本中的链接
-    pattern = r'(https?://\S+)'
+    pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     replaced_text = re.sub(pattern, url, origin_text)
     return replaced_text
