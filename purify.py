@@ -29,6 +29,7 @@ def process_url(text):
     返回:
         url, 文字中的链接
     """
+    print(f'原始text: {text}\n')
     url = extract_url(text)
     domain = extract_domain(url)
     short_url_domains = [
@@ -100,7 +101,10 @@ def expand_short_url(short_url):
     """
     try:
         
-        response = requests.head(short_url,allow_redirects=True)
+        response = requests.head(
+            short_url,
+            allow_redirects=True,
+            verify=False)
         expanded_url = response.url
         return expanded_url
     except requests.exceptions.RequestException as e:
