@@ -2,7 +2,7 @@
 Author: DBin_K DBinKv1@Gmail.com
 Date: 2023-11-12 01:09:06
 LastEditors: DBin_K DBinKv1@Gmail.com
-LastEditTime: 2023-11-12 11:27:05
+LastEditTime: 2023-11-12 12:18:20
 FilePath: \Link-Purify\purify.py
 Description: 
 '''
@@ -17,6 +17,7 @@ config_file = './rule.yml'    # 配置文件地址
 with open(config_file, 'r', encoding='utf-8') as file:
     config = yaml.safe_load(file)
 
+print(config)
 
 def expand_short_url(short_url):
     """
@@ -36,21 +37,25 @@ def expand_short_url(short_url):
         print("发生错误：", e)
         return None
 
-def remove_tracking_params(url, config):
+def remove_tracking_params(url):
     """
     根据给定的规则列表，清除URL中的跟踪参数并返回净化后的URL。
 
     参数：
     - url：要清除跟踪参数的URL
-    - config：配置文件的字典表示
 
     返回：
     - url：清除跟踪参数后的净化URL
     """
-    for provider, provider_config in config['providers'].items():
-        # 获取当前提供者的URL匹配模式
+    global config
+    print(config)
+    # 获取全局配置中的提供者配置信息
+    providers = config['providers']
+    print(providers)
+    for provider, provider_config in providers.items():
+        # 获取当前提供者的URL匹配域名
         pattern = provider_config['urlPattern']
-        # 如果URL匹配当前提供者的模式，则执行跟踪参数清除操作
+        # 如果URL匹配当前提供者的域名，则执行跟踪参数清除操作
         if re.match(pattern, url):
             # 获取当前提供者的规则列表
             rules = provider_config['rules']
@@ -60,14 +65,13 @@ def remove_tracking_params(url, config):
                 pattern = r'(\?|&){0}=[^&]*'.format(rule)
                 # 使用正则表达式替换URL中的匹配项为空字符串，实现参数清除
                 url = re.sub(pattern, '', url)
-            # 跳出循环，结束对其他提供者的匹配和清除操作
             break
     # 返回净化后的URL
     return url
 
 # 示例用法
 
-#url = 'https://www.bilibili.com/video/BV1R7411K7aF?spm_id_from=333.334.b_63686965665f7265636f6d6d656e64.1'
+#url = 'https://www.bilibili.com/video/BV1R7411K7aF?spm_id_from=333.334.b_63686965665f72656f6d6d656e64.1'
 
 # http://xhslink.com/YhhEpw
 
