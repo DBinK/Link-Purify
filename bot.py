@@ -1,6 +1,6 @@
 import os
 import telebot
-import purify as pf
+import purify
 from dotenv import load_dotenv
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
@@ -17,7 +17,7 @@ def send_welcome(message):
 @bot.message_handler(func=lambda msg: True)
 def reply_purify_link(message):
     url = message.text
-    clean_url = pf.remove_tracking_params_by_config(url, config)
+    clean_url = purify.remove_tracking_params(url, config)
     bot.reply_to(message, clean_url)
 
 
