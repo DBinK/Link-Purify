@@ -85,3 +85,15 @@ providers:
     rules:
       - bbid
       - ts
+
+  xiaohongshu.com:
+    urlPattern: '^https?:\/\/(?:[a-z0-9-]+\.)*?xiaohongshu\.com'
+    rules:
+      - app_platform
+      - app_version
+      - ignoreEngage
+      - share_from_user_hidden
+      - type
+      - xhsshare
+      - appuid
+      - apptime
