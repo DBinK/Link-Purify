@@ -2,7 +2,7 @@
 Author: DBin_K DBinKv1@Gmail.com
 Date: 2023-11-12 01:09:06
 LastEditors: DBin_K DBinKv1@Gmail.com
-LastEditTime: 2023-11-12 14:19:34
+LastEditTime: 2023-11-12 14:58:40
 FilePath: \Link-Purify\purify.py
 Description: 
 '''
@@ -23,7 +23,7 @@ def process_url(text):
     """
     主要功能, 提取文字中的域名, 如果是短链接则将其扩展
 
-    参数：
+    参数: 
         text, 任意带链接的文字输入
 
     返回:
@@ -31,14 +31,15 @@ def process_url(text):
     """
     url = extract_url(text)
     domain = extract_domain(url)
-    short_url_domains = ['b23.tv','xhslink.com']
+    short_url_domains = [
+        'b23.tv',
+        'xhslink.com']
 
     for short_url_domain in short_url_domains:
         if short_url_domain == domain:
             url = expand_short_url(url)
     
     url = remove_tracking_params(url)
-        
     return url
     
 
@@ -46,10 +47,10 @@ def extract_domain(url):
     """
     提取文字中的域名
 
-    参数：
-        url：链接
+    参数: 
+        url: 链接
 
-    返回：
+    返回: 
         域名，或 `None`
     """
 
@@ -68,11 +69,11 @@ def extract_url(text):
     """
     提取文本中的链接并返回。
 
-    参数：
-    - text：要提取链接的文本
+    参数: 
+    - text: 要提取链接的文本
 
-    返回：
-    - url：链接列表
+    返回: 
+    - url: 链接列表
     """
     # 定义链接的正则表达式模式
     pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
@@ -91,18 +92,19 @@ def expand_short_url(short_url):
     """
     展开短链接并返回完整的URL。
 
-    参数：
-    - short_url：要展开的短链接
+    参数: 
+    - short_url: 要展开的短链接
 
-    返回：
-    - expanded_url：展开后的完整URL，如果展开失败则返回None
+    返回: 
+    - expanded_url: 展开后的完整URL，如果展开失败则返回None
     """
     try:
-        response = requests.head(short_url, allow_redirects=True)
+        
+        response = requests.head(short_url,allow_redirects=True)
         expanded_url = response.url
         return expanded_url
     except requests.exceptions.RequestException as e:
-        print("发生错误：", e)
+        print("发生错误: ", e)
         return None
 
 
@@ -110,15 +112,17 @@ def remove_tracking_params(url):
     """
     根据给定的规则列表，清除URL中的跟踪参数并返回净化后的URL。
 
-    参数：
-    - url：要清除跟踪参数的URL
+    参数: 
+    - url: 要清除跟踪参数的URL
 
-    返回：
-    - url：清除跟踪参数后的净化URL
+    返回: 
+    - url: 清除跟踪参数后的净化URL
     """
-    global config
+    global config #使用全局配置文件
+
     print(f'原始url: {url}\n')
-    # 获取全局配置中的提供者配置信息
+
+    # 获取全局配置中的 provider
     providers = config['providers']
     
     for provider, provider_config in providers.items():
@@ -138,6 +142,4 @@ def remove_tracking_params(url):
     # 返回净化后的URL
     print(f'净化url: {url}\n')
     return url
-
-
 

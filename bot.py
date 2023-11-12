@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 
-print("BOT_TOKEN：", BOT_TOKEN)
+print("BOT_TOKEN: ", BOT_TOKEN)
 
 bot = telebot.TeleBot(BOT_TOKEN)
 

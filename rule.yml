@@ -1,5 +1,10 @@
-# 参考规则 https://rules2.clearurls.xyz/data.minify.json
-# 
+# 参考规则:
+# https://rules2.clearurls.xyz/data.minify.json
+# https://github.com/lz233/TarnhelmDocument/blob/main/docs/rules.md
+
+shortUrl:
+  - b23.tv
+  - xhslink.com
 
 providers:
   taobao.com:
